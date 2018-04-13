@@ -1,0 +1,21 @@
+
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+<h3>Sessions List</h3>
+
+<div class="divTable">
+    <div class="divTableBody">
+        <div class="divTableRow">
+            <div class="divTableCell">Session Date</div>
+            <div class="divTableCell">Duration</div>
+            <div class="divTableCell">Play</div>
+        </div>
+        {{#sessions}}
+        <div class="divTableRow">
+            <div class="divTableCell">{{date}}</div>
+            <div class="divTableCell">{{duration}}</div>
+            <div class="divTableCell"><a href= '/player/{{sessionId}}'>play</a></div>
+        </div>
+        {{/sessions}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+
+<script src="/socket.io/socket.io.js"></script>
+<script src='../javascripts/player.js'></script>
+<link rel='stylesheet' href='/stylesheets/style.css' />
+<h3>Session Playback</h3>
+
+<div id='player' style="width:{{width}}px; height:{{height}}px; border-style: solid;" sessionId={{sessionId}}>
+    <div id='mouseCursor' style="width:50px; hight:50px">
+        <img id='mouseImage' src='/images/mouse-pointer.png' style="width:50px; hight:50px">
+    </div>
+    
+
+</div>
+
+<div style="display: inline-block"><button class='button play' onclick="playSession()"></button></div> 
+<div style="display: inline-block"><button class='button pause' onclick="pauseSession()"></button></div>
