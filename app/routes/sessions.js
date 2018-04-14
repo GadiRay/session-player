@@ -1,21 +1,30 @@
 var express = require('express');
-var pg = require('pg');
 
-var SessionRepositoryCtor = require('../public/javascripts/sessionRepository');
-var SessionRepository = new SessionRepositoryCtor(pg);
 
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
-    SessionRepository.getAllSessions()
-        .then(results => {
+module.exports.getAllSessions = function(sessionDomain){
+    router.get('/', function(req, res, next) {
+        sessionDomain.getAllSessions()
+            .then(result => {
 
-            res.render('sessionsList', {
-                sessions: results
+                res.render('sessionsList', result);
+
             });
 
-        })
-});
+        
+    });
+
+    return router;
+}
 
 
-module.exports = router;
+module.exports.getSessionPlayer = function(sessionDomain){
+    router.get('/:sessionId', function(req, res, next){
+        sessionDomain.getSessionPlayer(req.params.sessionId)
+            .then(result => {
+                res.render('player', result);
+            });
+    });
+    return router;
+}

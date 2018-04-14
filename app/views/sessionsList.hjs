@@ -13,7 +13,7 @@
         <div class="divTableRow">
             <div class="divTableCell">{{date}}</div>
             <div class="divTableCell">{{duration}}</div>
-            <div class="divTableCell"><a href= '/player/{{sessionId}}'>play</a></div>
+            <div class="divTableCell"><a href= '/sessions/{{sessionId}}'>play</a></div>
         </div>
         {{/sessions}}
         </div>
