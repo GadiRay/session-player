@@ -1,7 +1,5 @@
 var socket = io('/recorder-ns');
 
-
-const BATCH_SIZE = 50;
 const INTERVAL_MS = 100;
 
 var width = screen.width;
@@ -20,11 +18,6 @@ socket.on('sessionCreated', function(msg){
 
 
 
-
-let eventArray = new Array();
-
-
-
 let handleMousemove = (event) => {
     var d = new Date();
     let mousemove = { 'time': d.getTime(), 'x': event.x, 'y': event.y };
@@ -38,13 +31,7 @@ let handleMousemove = (event) => {
   };
 
   let pushNewEvent = (event) => {
-    eventArray.push(event);
-    if(eventArray.length == BATCH_SIZE){
-        var tmpArray = eventArray;
-        eventArray = new Array();
-        tmpArray.sort((a, b) => a.time > b.time);
-        socket.emit('mouseEvents', { sessionId: sessionId, events: tmpArray});
-    }
+        socket.emit('mouseEvent', { sessionId: sessionId, event: event});  
   }
 
   let throttle = (func, delay) => {

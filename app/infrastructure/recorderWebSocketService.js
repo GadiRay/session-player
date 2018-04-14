@@ -1,3 +1,7 @@
+
+var pendingEvents = [];
+var batchSize = 50;
+
 function RecorderWebSocketService(io, sessionsDomain, mouseEventDomain){
     var nsp = io.of('/recorder-ns');
     nsp.on('connection', function (socket) {
@@ -9,18 +13,24 @@ function RecorderWebSocketService(io, sessionsDomain, mouseEventDomain){
                                 .then(res => socket.emit('sessionCreated', { id: res}))
                                 .catch(err => console.log(err));
         });
-        socket.on('mouseEvents', function(msg){
+        socket.on('mouseEvent', function(msg){
           console.log('mouseEvents');
-          console.log(msg.events);
-          mouseEventDomain.addEvents(msg.sessionId, msg.events)
-                        .then(res => {
-                          msg.events.sort((a, b) => a.time > b.time);
-                          var endTime = msg.events[msg.events.length - 1].time;
-                          sessionsDomain.endSession(msg.sessionId, endTime)
-                                        .catch(e => console.log(e));
+          console.log(msg.event);
+          pendingEvents.push(msg.event);
+          if(pendingEvents.length == batchSize){
+              var tmpArray = pendingEvents;
+              pendingEvents = [];
+              mouseEventDomain.addEvents(msg.sessionId, tmpArray)
+                            .then(res => {
+                                tmpArray.sort((a, b) => a.time > b.time);
+                              var endTime = tmpArray[tmpArray.length - 1].time;
+                              sessionsDomain.endSession(msg.sessionId, endTime)
+                                            .catch(e => console.log(e));
+    
+                            })
+                            .catch(err => console.log(err));
 
-                        })
-                        .catch(err => console.log(err));
+          }
         });
         
       });
