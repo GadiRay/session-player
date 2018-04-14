@@ -1,6 +1,8 @@
 
+var config = require('../config');
+
 var pendingEvents = [];
-var batchSize = 50;
+var batchSize = config.recorder.batchSize;
 
 function RecorderWebSocketService(io, sessionsDomain, mouseEventDomain){
     var nsp = io.of('/recorder-ns');

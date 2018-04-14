@@ -10,9 +10,9 @@ function PlayerWebSocketService(io, mouseEventsDomain){
     nsp.on('connection', function (socket) {
         console.log('connected player-ns');
         socket.on('playSession', function(msg){
-        
+
             console.log('got playSession' + msg);
-            mouseEventsDomain.getEventsFromTimestamp(msg, currentTimestamp)
+            mouseEventsDomain.getEventsFromTimestamp(msg.sessionId, msg.currentTimestamp)
               .then(events =>{
                   play = true;
                   if(events.length > 0){

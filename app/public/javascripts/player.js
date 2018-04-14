@@ -23,7 +23,7 @@ socket.on('frame', function(msg){
 
 function playSession(){
     var sessionId = document.getElementById('player').getAttribute('sessionId');
-    socket.emit('playSession', sessionId);
+    socket.emit('playSession', { sessionId: sessionId, currentTimestamp: currentTimestamp});
 }
 
 function pauseSession(){

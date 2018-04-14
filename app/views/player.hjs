@@ -12,5 +12,5 @@
 
 </div>
 
-<div style="display: inline-block"><button class='button play' onclick="playSession()"></button></div> 
-<div style="display: inline-block"><button class='button pause' onclick="pauseSession()"></button></div>
+<div style="display: inline-block"><img src='/images/play-outline.png' onclick="playSession()"></div> 
+<div style="display: inline-block"><img src='/images/pause-outline.png' onclick="pauseSession()"></div>
