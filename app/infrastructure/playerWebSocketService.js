@@ -4,7 +4,9 @@ var play = true;
 var currentTimestamp;
 var pendingTimeouts = [];
 
-
+//this only support on player played at a time
+//to support multi player i can use socket.io rooms with sessio id as room name
+//did not complete is due to time
 function PlayerWebSocketService(io, mouseEventsDomain){
     var nsp = io.of('/player-ns');
     nsp.on('connection', function (socket) {
@@ -12,6 +14,9 @@ function PlayerWebSocketService(io, mouseEventsDomain){
         socket.on('playSession', function(msg){
 
             console.log('got playSession' + msg);
+            //in real world we won't load all the data in-memory
+            //i tried to use pg-cursor and pg-querystream to prevent that but the results
+            //in the ui were bad and i didn't have time to work to fix it
             mouseEventsDomain.getEventsFromTimestamp(msg.sessionId, msg.currentTimestamp)
               .then(events =>{
                   play = true;
